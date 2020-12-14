@@ -1,0 +1,22 @@
+Entidades
+  Cadidatos
+    nome
+    e-mail
+    habilidades
+    necessidade
+    dataRegistro
+
+  Empresa
+    nome
+    E-mail
+    necessidades
+    vagas
+    dataRegistro
+	
+
+Serviços
+  Autenticação
+  Crud - Empresa
+  Crud - Candidatos
+  Candidados - ​talents service 
+  Vagas - openings service ​ 
