@@ -1,17 +1,29 @@
-import { createServer } from 'http';
-import dotenv from 'dotenv';
+import express from 'express';
+import bodyParser from 'body-parser';
+import methodOverride from 'method-override';
+import cors from 'cors';
+import { config } from 'dotenv';
+
+import { routers } from './src';
 import { connect } from './config';
-import { requestListener } from './src';
 
-dotenv.config();
+config();
 
-const server = createServer(requestListener);
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(methodOverride());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
-server.listen(process.env.PORT, process.env.HOST, () => {
-  const statusDB = connect();
-  if (statusDB  !== 'success') {
-    console.log('Erro ao conectar no banco de dados se o error persistir contate o administrador');
-  }
+connect();
+
+routers(app);
+
+app.listen(process.env.PORT, async () => {
   console.log(
     `Server is running on http://${process.env.HOST}:${process.env.PORT}`
   );

@@ -1,30 +1,49 @@
-import { STATUS_CODES } from 'http';
-import { parse } from 'url';
-export const requestListener = function (req, res) {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
-    'Access-Control-Max-Age': 2592000, // 30 days
-    'Content-Type': 'application/json',
-  };
-  res.writeHead(200, headers);
-  //   const { pathname } = parse(req.url, true);
-  const { method } = req;
-  if (method === 'GET') {
-    const { query } = parse(req.url, true);
-    console.log(query);
-    res.writeHead(200);
-    return res.end('Hello Word Get');
-  }
-  if (method === 'POST') {
-    return res.end('Method post');
-  }
-  if (method === 'PUT') {
-    return res.end('Method put');
-  }
-  if (method === 'DELETE') {
-    //TODO: DELETE logic
-    return res.end('Method del');
-  }
-  return res.end(`{"error": "${STATUS_CODES[404]}"}`);
+import controller from './controller';
+
+export const routers = (app) => {
+  app.get('/', (req, res) => {
+    controller
+      .getAll()
+      .then((response) => {
+        res.end(JSON.stringify(response));
+      })
+      .catch((err) => res.end(err));
+  });
+  app.get('/:id', (req, res) => {
+    controller
+      .get(query)
+      .then((response) => response.json())
+      .then((values) => res.end(values))
+      .catch((err) => res.end(err));
+  });
+
+  app.post('/', (req, res) => {
+    controller
+      .post(req)
+      .then((response) => {
+        console.log('response', response);
+        res.end(JSON.stringify(response));
+      })
+      .catch((err) => res.end(err));
+  });
+  app.put('/:id', (req, res) => {
+    controller
+      .put(query)
+      .then((response) => response.json())
+      .then((values) => res.end(values))
+      .catch((err) => res.end(err));
+  });
+  app.delete('/:id', (req, res) => {
+    controller
+      .put(query)
+      .then((response) => response.json())
+      .then((values) => res.end(values))
+      .catch((err) => res.end(err));
+  });
+
+  app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+  });
+  return app;
 };

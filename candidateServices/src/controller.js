@@ -1,6 +1,6 @@
 import db from './db';
 
-const getAll = () => {
+const getAll = async () => {
   let result;
   try {
     result = await db.getAll();
@@ -9,37 +9,41 @@ const getAll = () => {
   }
   return result;
 };
-const get = async (param) => {
+const get = async ({ id }) => {
   let result;
   try {
+    if (!id) throw new Error('Error receiving identifier!!!');
     result = await db.get(id);
   } catch (error) {
     result = error;
   }
   return result;
 };
-const post = (param) => {
+const post = async ({ body }) => {
   let result;
   try {
-    result = await db.post(param);
-
+    if (!body) throw new Error('Error receiving parameters!!!');
+    result = await db.post(body);
   } catch (error) {
     result = error;
   }
   return result;
 };
-const put = (param) => {
+const put = async ({ id, params }) => {
   let result;
   try {
-    result = await db.put(id, param);
+    if (!id && !params)
+      throw new Error('Error receiving identifier and parameters!!!');
+    result = await db.put(id, params);
   } catch (error) {
     result = error;
   }
   return result;
 };
-const del = (param) => {
+const del = async ({ id }) => {
   let result;
   try {
+    if (!id) throw new Error('Error receiving identifier!!!');
     result = await db.del(id);
   } catch (error) {
     result = error;
@@ -52,5 +56,5 @@ export default {
   getAll,
   post,
   put,
-  del
-}
+  del,
+};

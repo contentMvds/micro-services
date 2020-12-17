@@ -2,13 +2,15 @@ import mongoose from 'mongoose';
 
 const schema = mongoose.model(
   'cadidates',
-  new mongoose.Schema({
-    name: { type: String, default: '', required: true },
-    email: { type: String, default: '', required: true },
-    skill: { type: [Object], default: {}, required: true },
-    needs: { type: [Object], default: {} },
-    data: { type: Date, default: Date.now() },
-  })
+  new mongoose.Schema(
+    {
+      name: { type: String, default: '', required: true },
+      email: { type: String, default: '', required: true },
+      skill: { type: Array, default: {}, required: true },
+      needs: { type: Array, default: {} },
+      data: { type: Date, default: Date.now() },
+    }
+  )
 );
 
 const candidatesDB = async () => {
@@ -21,8 +23,14 @@ const candidateDB = async (_id) => {
   return result;
 };
 const createCandidatesDB = async (obj) => {
-  if (!db) throw new Error('register not found create');
-  result = await schema.create(obj).exec();
+  console.log('obj', obj.name);
+  if (!obj) throw new Error('register not found create');
+  let result;
+  try {
+    result = await schema.create(obj);
+  } catch (error) {
+    result = error;
+  }
   return result;
 };
 const updateCondidatesDB = async (_id, obj) => {

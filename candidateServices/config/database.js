@@ -1,22 +1,25 @@
 import mongoose from 'mongoose';
 
-const connect = async () => {
+const connect = () => {
   const option = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
     useCreateIndex: true,
   };
-  try {
-    await mongoose.connect(
-      `mongodb://${process.env.MONGO_URL}:${process.env.MONGO_PORT}/${process.env.MONGO_DATABASE}`,
-      option
-    );
-    console.log('Success Conections');
-    return 'success';
-  } catch (err) {
-    return err;
-  }
+  mongoose.connect(
+    `mongodb://${process.env.MONGO_URL}:${process.env.MONGO_PORT}/${process.env.MONGO_DATABASE}`,
+    option,
+    (err) => {
+      if (err) {
+        console.log(`====>  Error connecting to ${config.stringMongo}`);
+        console.log(`Reason: ${err}`);
+      } else {
+        console.log(`===> Connection with MongoDB established`);
+      }
+    }
+  );
+  mongoose.set('debug', true);
 };
 
 const close = async (client) => {
