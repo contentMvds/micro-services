@@ -11,33 +11,28 @@ export const routers = (app) => {
   });
   app.get('/:id', (req, res) => {
     controller
-      .get(query)
-      .then((response) => response.json())
-      .then((values) => res.end(values))
+      .get(req.params)
+      .then((response) => res.end(JSON.stringify(response)))
       .catch((err) => res.end(err));
   });
-
   app.post('/', (req, res) => {
     controller
       .post(req)
       .then((response) => {
-        console.log('response', response);
         res.end(JSON.stringify(response));
       })
       .catch((err) => res.end(err));
   });
   app.put('/:id', (req, res) => {
     controller
-      .put(query)
-      .then((response) => response.json())
-      .then((values) => res.end(values))
+      .put(req.params, req.body)
+      .then((response) => res.end(JSON.stringify(response)))
       .catch((err) => res.end(err));
   });
   app.delete('/:id', (req, res) => {
     controller
-      .put(query)
-      .then((response) => response.json())
-      .then((values) => res.end(values))
+      .del(req.params)
+      .then((response) => res.end(JSON.stringify(response)))
       .catch((err) => res.end(err));
   });
 

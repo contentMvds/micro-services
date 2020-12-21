@@ -15,7 +15,7 @@ const get = async ({ id }) => {
     if (!id) throw new Error('Error receiving identifier!!!');
     result = await db.get(id);
   } catch (error) {
-    result = error;
+    result = error.message;
   }
   return result;
 };
@@ -25,18 +25,18 @@ const post = async ({ body }) => {
     if (!body) throw new Error('Error receiving parameters!!!');
     result = await db.post(body);
   } catch (error) {
-    result = error;
+    result = error.message;
   }
   return result;
 };
-const put = async ({ id, params }) => {
+const put = async (id, params) => {
   let result;
   try {
     if (!id && !params)
       throw new Error('Error receiving identifier and parameters!!!');
-    result = await db.put(id, params);
+    result = await db.pull(id, params);
   } catch (error) {
-    result = error;
+    result = error.message;
   }
   return result;
 };
@@ -46,7 +46,7 @@ const del = async ({ id }) => {
     if (!id) throw new Error('Error receiving identifier!!!');
     result = await db.del(id);
   } catch (error) {
-    result = error;
+    result = error.message;
   }
   return result;
 };

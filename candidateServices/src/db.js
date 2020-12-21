@@ -2,15 +2,13 @@ import mongoose from 'mongoose';
 
 const schema = mongoose.model(
   'cadidates',
-  new mongoose.Schema(
-    {
-      name: { type: String, default: '', required: true },
-      email: { type: String, default: '', required: true },
-      skill: { type: Array, default: {}, required: true },
-      needs: { type: Array, default: {} },
-      data: { type: Date, default: Date.now() },
-    }
-  )
+  new mongoose.Schema({
+    name: { type: String, default: '', required: true },
+    email: { type: String, default: '', required: true },
+    skill: { type: Array, default: {}, required: true },
+    needs: { type: Array, default: {} },
+    data: { type: Date, default: Date.now() },
+  })
 );
 
 const candidatesDB = async () => {
@@ -23,24 +21,18 @@ const candidateDB = async (_id) => {
   return result;
 };
 const createCandidatesDB = async (obj) => {
-  console.log('obj', obj.name);
   if (!obj) throw new Error('register not found create');
-  let result;
-  try {
-    result = await schema.create(obj);
-  } catch (error) {
-    result = error;
-  }
+  const result = await schema.create(obj);
   return result;
 };
-const updateCondidatesDB = async (_id, obj) => {
-  if (!_id || !obj) throw new Error('Parameters not found in upadate');
-  result = await schema.updateOne({ _id }, obj).exec();
+const updateCondidatesDB = async ({ id }, obj) => {
+  if (!id || !obj) throw new Error('Parameters not found in upadate');
+  const result = await schema.findOneAndUpdate({ _id: id }, obj, { new: true }).exec();
   return result;
 };
 const deleteCondidatesDB = async (_id) => {
   if (!_id) throw new Error('Identifier not found in delete');
-  result = await schema.deleteOne({ _id }).exec();
+  const result = await schema.deleteOne({ _id }).exec();
   return result;
 };
 
