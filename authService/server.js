@@ -5,8 +5,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { config } from 'dotenv';
 
-import { candidateRouter } from './src/router';
-import { connect } from './config';
+import { authRouter } from './src/router';
 
 config();
 
@@ -21,9 +20,7 @@ app.use(
   })
 );
 
-connect();
-
-app.use(routers())
+app.use(authRouter())
 
 app.listen(process.env.PORT, async () => {
   console.log(

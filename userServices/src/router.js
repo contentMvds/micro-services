@@ -1,40 +1,37 @@
 import { Router } from 'express';
-import { candidateController } from './controller';
+import { usersController } from './controller';
 
-export const candidateRouter = () => {
-  const candRouter = Router();
-  candRouter.get('/candidates', (req, res) => {
-    candidateController()
+export const userRouter = () => {
+  const userRouter = Router();
+  userRouter.get('/users', (req, res) => {
+    usersController()
       .getAll()
       .then((response) => res.end(JSON.stringify(response)))
       .catch((err) => res.end(err));
   });
-  candRouter.get('/candidate/:id', (req, res) => {
-    candidateController()
+  userRouter.get('/users/:id', (req, res) => {
+    usersController()
       .get(req.params)
       .then((response) => res.end(JSON.stringify(response)))
       .catch((err) => res.end(err));
   });
-  candRouter.post('/candidate', (req, res) => {
-    candidateController()
+  userRouter.post('/users', (req, res) => {
+    usersController()
       .post(req)
-      .then((response) => {
-        res.end(JSON.stringify(response));
-      })
+      .then((response) => res.end(JSON.stringify(response)))
       .catch((err) => res.end(err));
   });
-  candRouter.put('/candidate/:id', (req, res) => {
-    candidateController()
+  userRouter.put('/users/:id', (req, res) => {
+    usersController()
       .put(req.params, req.body)
       .then((response) => res.end(JSON.stringify(response)))
       .catch((err) => res.end(err));
   });
-  candRouter.delete('/candidate/:id', (req, res) => {
-    candidateController()
+  userRouter.delete('/users/:id', (req, res) => {
+    usersController()
       .del(req.params)
       .then((response) => res.end(JSON.stringify(response)))
       .catch((err) => res.end(err));
   });
-
-  return candRouter;
+  return userRouter;
 };

@@ -1,1 +1,0 @@
-export { routers } from './router'

@@ -1,10 +1,10 @@
-import { candidateModel } from './model';
+import { userModel } from './model';
 
-export const candidateController = () => {
+export const usersController = () => {
   const getAll = async () => {
     let result;
     try {
-      result = await candidateModel.find().exec();
+      result = await userModel.find().exec();
     } catch (error) {
       result = error;
     }
@@ -14,7 +14,7 @@ export const candidateController = () => {
     let result;
     try {
       if (!id) throw new Error('Error receiving identifier!!!');
-      result = await candidateModel.findById({ id: _id }).exec();
+      result = await userModel.findById({ id: _id }).exec();
     } catch (error) {
       result = error.message;
     }
@@ -24,7 +24,7 @@ export const candidateController = () => {
     let result;
     try {
       if (!body) throw new Error('Error receiving parameters!!!');
-      result = await candidateModel.create(body);
+      result = await userModel.create(body);
     } catch (error) {
       result = error.message;
     }
@@ -35,7 +35,7 @@ export const candidateController = () => {
     try {
       if (!id && !params)
         throw new Error('Error receiving identifier and parameters!!!');
-      result = await candidateModel
+      result = await userModel
         .findOneAndUpdate({ _id: id }, params, { new: true })
         .exec();
     } catch (error) {
@@ -47,7 +47,7 @@ export const candidateController = () => {
     let result;
     try {
       if (!id) throw new Error('Error receiving identifier!!!');
-      result = await candidateModel.deleteOne({id: _id }).exec();
+      result = await userModel.deleteOne({id: _id }).exec();
     } catch (error) {
       result = error.message;
     }
